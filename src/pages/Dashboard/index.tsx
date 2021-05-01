@@ -6,9 +6,17 @@ import Food from '../../components/Food';
 import ModalAddFood from '../../components/ModalAddFood';
 import ModalEditFood from '../../components/ModalEditFood';
 import { FoodsContainer } from './styles';
+import FoodData from '../../components/Food/FoodData';
 
-class Dashboard extends Component {
-  constructor(props) {
+interface DashboardState {
+  foods: FoodData[];
+  editingFood: FoodData | any;
+  modalOpen: boolean;
+  editModalOpen: boolean;
+}
+
+class Dashboard extends Component<any, DashboardState> {
+  constructor(props: any) {
     super(props);
     this.state = {
       foods: [],
@@ -24,7 +32,7 @@ class Dashboard extends Component {
     this.setState({ foods: response.data });
   }
 
-  handleAddFood = async food => {
+  handleAddFood = async (food: FoodData) => {
     const { foods } = this.state;
 
     try {
@@ -39,7 +47,7 @@ class Dashboard extends Component {
     }
   }
 
-  handleUpdateFood = async food => {
+  handleUpdateFood = async (food: FoodData) => {
     const { foods, editingFood } = this.state;
 
     try {
@@ -58,7 +66,7 @@ class Dashboard extends Component {
     }
   }
 
-  handleDeleteFood = async id => {
+  handleDeleteFood = async (id: number) => {
     const { foods } = this.state;
 
     await api.delete(`/foods/${id}`);
@@ -80,7 +88,7 @@ class Dashboard extends Component {
     this.setState({ editModalOpen: !editModalOpen });
   }
 
-  handleEditFood = food => {
+  handleEditFood = (food: FoodData) => {
     this.setState({ editingFood: food, editModalOpen: true });
   }
 
